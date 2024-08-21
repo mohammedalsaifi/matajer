@@ -1,5 +1,6 @@
 <?php
 
+use App\Helpers\Currency;
 use Illuminate\Support\Facades\Facade;
 
 return [
@@ -84,6 +85,8 @@ return [
 
     'locale' => 'en',
 
+    'currency' => 'USD',
+
     /*
     |--------------------------------------------------------------------------
     | Application Fallback Locale
@@ -95,7 +98,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => 'ar',
 
     /*
     |--------------------------------------------------------------------------
@@ -191,7 +194,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // ...
+        'Currency' => App\Helpers\Currency::class,
     ])->toArray(),
 
 ];

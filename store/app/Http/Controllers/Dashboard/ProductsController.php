@@ -80,7 +80,7 @@ class ProductsController extends Controller
     public function update(Request $request, Product $product)
     {
         $product->update($request->except('tags'));
-        $tags = explode(',', $request->post('tags'));
+        $tags = json_decode($request->post('tags'));
         $tag_ids = [];
         $saved_tags = Tag::all();
         foreach ($tags as $t_name) {

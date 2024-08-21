@@ -3,9 +3,10 @@
 namespace App\Models;
 
 use App\Models\Scopes\StoreScope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Str;
 
 class Product extends Model
 {
@@ -52,5 +53,30 @@ class Product extends Model
             'id',           // PK current model
             'id'            // PK related model
         );
+    }
+
+    public function scopeActive(Builder $builder)
+    {
+        $builder->where('status', '=', 'active');
+    }
+
+    public function getImageUrlAttribute()
+    {
+        if (!$this->image) {
+            return 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHICWZcFeQ7UuaU7N30-E4Vt1GaTYIU1DIEA&s';
+        }
+
+        if (Str::startsWith($this->image, ['http://', 'https://'])) {
+            return $this->image;
+        }
+    }
+
+    public function getSalePercentAttribute()
+    {
+        if (!$this->compare_price) {
+            return 0;
+        }
+
+        return round(100 - (100 * $this->price / $this->compare_price), 1);
     }
 }
