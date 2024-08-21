@@ -15,14 +15,16 @@ Route::middleware()->as('dashboard.')->prefix('dashboard/')->group(function () {
 */
 
 Route::group([
-    'middleware' => ['auth'],
+    'middleware' => ['auth', 'auth.type:super-admin,admin'],
     'as' => 'dashboard.',
     'prefix' => 'dashboard/',
-    'namespace' => 'App\Http\Controllers'
+    // 'namespace' => 'App\Http\Controllers'
 ], function () {
 
-    Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('profile', [ProfileController::class, 'edit'])
+        ->name('profile.edit');
+    Route::patch('profile', [ProfileController::class, 'update'])
+        ->name('profile.update');
 
     Route::get('', [DashboardController::class, 'index'])
         ->name('dashboard');
