@@ -25,20 +25,19 @@ class CategoriesController extends Controller
 
         $categories = $query->SimplePaginate(4); // return Collection Object
         $categories = Category::with('parent')
-            /* leftJoin('categories as parents', 'parents.id', '=', 'categories.parent_id')
-            ->select([
-                'categories.*',
-                'parents.name as parent_name'
-            ]) */
-            ->select('categories.*')
-            ->selectRaw("(SELECT COUNT(*) FROM products WHERE status = 'active' AND category_id = categories.id) as products_count")
-            /*
+            // ->leftJoin('categories as parents', 'parents.id', '=', 'categories.parent_id')
+            // ->select([
+            //     'categories.*',
+            //     'parents.name as parent_name'
+            // ])
+            // ->select('categories.*')
+            // ->selectRaw("(SELECT COUNT(*) FROM products WHERE status = 'active' AND category_id = categories.id) as products_count")
+
             ->withCount([
-            'products as prdcts_num' => function ($query) {
-            $query->where('status' , '=', 'active');
-            }
+                'products as prdcts_num' => function ($query) {
+                    $query->where('status', '=', 'active');
+                }
             ])
-            */
             ->filter($request->query())
             // ->withTrashed() means return all results even those have value not null,
             // ->onlyTrashed() means return results of null value equal for deleted_at column.

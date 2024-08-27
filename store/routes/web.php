@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Front\CartController;
+use App\Http\Controllers\Front\CheckoutController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\ProductsController;
 use App\Http\Controllers\ProfileController;
@@ -27,6 +28,9 @@ Route::get('/products/{product:slug}', [ProductsController::class, 'show'])
 
 Route::resource('cart', CartController::class);
 
+
+Route::get('checkout', [CheckoutController::class, 'create'])->name('checkout');
+Route::post('checkout', [CheckoutController::class, 'store']);
 /* Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])
         ->name('profile.edit');
@@ -37,11 +41,6 @@ Route::resource('cart', CartController::class);
     Route::delete('/profile', [ProfileController::class, 'destroy'])
         ->name('profile.destroy');
 }); */
-
-
-
-
-
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/dashboard.php';

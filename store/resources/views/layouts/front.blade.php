@@ -280,7 +280,7 @@
                                             </li>
                                             <li class="nav-item"><a href="cart.html">Cart</a></li>
                                             <li class="nav-item">
-                                                <a href="checkout.html">Checkout</a>
+                                                <a href="{{ route('checkout') }}">Checkout</a>
                                             </li>
                                         </ul>
                                     </li>
