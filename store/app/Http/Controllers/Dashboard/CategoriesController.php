@@ -21,15 +21,13 @@ class CategoriesController extends Controller
     public function index(Request $request)
     {
         $request = request();
-        $query = Category::query();
 
-        $categories = $query->SimplePaginate(4); // return Collection Object
         $categories = Category::with('parent')
-            // ->leftJoin('categories as parents', 'parents.id', '=', 'categories.parent_id')
-            // ->select([
-            //     'categories.*',
-            //     'parents.name as parent_name'
-            // ])
+            /* ->leftJoin('categories as parents', 'parents.id', '=', 'categories.parent_id')
+            ->select([
+                'categories.*',
+                'parents.name as parent_name'
+            ]) */
             // ->select('categories.*')
             // ->selectRaw("(SELECT COUNT(*) FROM products WHERE status = 'active' AND category_id = categories.id) as products_count")
 
@@ -50,6 +48,7 @@ class CategoriesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function create()
     {
         $parents = Category::all();
@@ -67,8 +66,8 @@ class CategoriesController extends Controller
     {
         /*
 
-        - Mass Assignment means sending all preperties in one step,
-          for security issues you need to declare fillable viriable contains array with all fillable inputs
+        - Mass Assignment means sending all properties in one step,
+        for security issues you need to declare fillable variable contains array with all fillable inputs
 
         - against of of $fillable is $guarded
 

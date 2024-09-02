@@ -20,7 +20,7 @@ return new class extends Migration
                 ->nullable()
                 ->constrained('users')
                 ->nullOnDelete();
-            $table->string('number')->unique();
+            $table->unsignedBigInteger('number')->unique();
             $table->string('payment_method');
             $table->enum('status', ['pending', 'processing', 'delivering', 'completed', 'cancelled', 'refunded'])
                 ->default('pending');

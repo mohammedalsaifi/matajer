@@ -18,7 +18,6 @@
             <th scope="col">Store</th>
             <th scope="col">Status</th>
             <th scope="col">Creation</th>
-
         </tr>
     </thead>
     <tbody>
