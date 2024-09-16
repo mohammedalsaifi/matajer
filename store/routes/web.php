@@ -42,5 +42,5 @@ Route::post('checkout', [CheckoutController::class, 'store']);
         ->name('profile.destroy');
 }); */
 
-require __DIR__ . '/auth.php';
+// require __DIR__ . '/auth.php';
 require __DIR__ . '/dashboard.php';

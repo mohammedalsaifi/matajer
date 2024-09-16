@@ -8,6 +8,7 @@ use App\Models\Product;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\DB;
+use Throwable;
 
 class DebuctProductQuantity
 {
@@ -29,13 +30,15 @@ class DebuctProductQuantity
      */
     public function handle($order, $user = null) // if listener dealing with more one event you must not specify event
     {
-
-        foreach ($order->products as $product) {
-            // $product->decrement('quantity', $product->order_item->quantity);
-            Product::where('id', '=', $product->product_id)
-                ->update([
-                    'quantity' => DB::raw('quantity - ' . $product->quantity),
-                ]);
+        try {
+            foreach ($order->products as $product) {
+                // $product->decrement('quantity', $product->order_item->quantity);
+                Product::where('id', '=', $product->product_id)
+                    ->update([
+                        'quantity' => DB::raw('quantity - ' . $product->quantity),
+                    ]);
+            }
+        } catch (Throwable $e) {
         }
     }
 }
