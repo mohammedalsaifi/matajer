@@ -15,9 +15,9 @@ Route::middleware()->as('dashboard.')->prefix('dashboard/')->group(function () {
 */
 
 Route::group([
-    'middleware' => ['auth', 'auth.type:super-admin,admin'],
+    'middleware' => ['auth:admin'],
     'as' => 'dashboard.',
-    'prefix' => 'dashboard/',
+    'prefix' => 'admin/dashboard/',
     // 'namespace' => 'App\Http\Controllers'
 ], function () {
 
