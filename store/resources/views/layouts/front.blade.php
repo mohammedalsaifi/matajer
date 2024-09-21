@@ -7,10 +7,7 @@
     <title>{{ $title }}</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link
-        rel="shortcut icon"
-        type="image/x-icon"
-        href="{{ asset('assets/images/favicon.svg') }}" />
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/images/favicon.svg') }}" />
 
     <!-- ========================= CSS here ========================= -->
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
@@ -52,27 +49,28 @@
                             <ul class="menu-top-link">
                                 <li>
                                     <div class="select-position">
-                                        <select id="select4">
-                                            <option value="0" selected>$ USD</option>
-                                            <option value="1">€ EURO</option>
-                                            <option value="2">$ CAD</option>
-                                            <option value="3">₹ INR</option>
-                                            <option value="4">¥ CNY</option>
-                                            <option value="5">৳ BDT</option>
-                                        </select>
+                                        <form action="{{ route('currency.store') }}" method="post">
+                                            @csrf
+                                            <select name="currency_code" onchange="this.form.submit()">
+                                                <option value="USD" @selected('USD'==session('currency_code'))>$ USD</option>
+                                                <option value="EUR" @selected('EUR'==session('currency_code'))>€ EURO</option>
+                                                <option value="ILS" @selected('ILS'==session('currency_code'))>$ ILS</option>
+                                                <option value="JOD" @selected('JOD'==session('currency_code'))>₹ JOD</option>
+                                                <option value="SAR" @selected('SAR'==session('currency_code'))>¥ SAR</option>
+                                                <option value="QAR" @selected('QAR'==session('currency_code'))>৳ QAR</option>
+                                            </select>
+                                        </form>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="select-position">
-                                        <select id="select5">
-                                            <option value="0" selected>English</option>
-                                            <option value="1">Español</option>
-                                            <option value="2">Filipino</option>
-                                            <option value="3">Français</option>
-                                            <option value="4">العربية</option>
-                                            <option value="5">हिन्दी</option>
-                                            <option value="6">বাংলা</option>
-                                        </select>
+                                        <form action="{{ URL::current() }}" method="get">
+                                            <select name="locale" onchange="this.form.submit()">
+                                                @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                                                <option value="{{ $localeCode }}" @selected($localeCode==App::currentLocale())>{{ $properties['native'] }}</option>
+                                                @endforeach
+                                            </select>
+                                        </form>
                                     </div>
                                 </li>
                             </ul>
@@ -81,9 +79,9 @@
                     <div class="col-lg-4 col-md-4 col-12">
                         <div class="top-middle">
                             <ul class="useful-links">
-                                <li><a href="index.html">Home</a></li>
-                                <li><a href="about-us.html">About Us</a></li>
-                                <li><a href="contact.html">Contact Us</a></li>
+                                <li><a href="index.html">{{ trans('Home') }}</a></li>
+                                <li><a href="about-us.html">@lang('About Us')</a></li>
+                                <li><a href="contact.html">{{ __('Contact Us') }}</a></li>
                             </ul>
                         </div>
                     </div>
@@ -96,23 +94,23 @@
                             </div>
                             <ul class="user-login">
                                 <li>
-                                    <a href="{{ route('logout') }}" onclick="event.preventDefault; document.getElementById('logout').submit()">Log Out</a>
+                                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout').submit()">Sign Out</a>
                                 </li>
-                                <form action="{{ route('logout') }}" method="post" id="logout" style="display:none">
+                                <form action="{{ route('logout') }}" id="logout" method="post" style="display:none">
                                     @csrf
                                 </form>
                             </ul>
                             @else
                             <div class="user">
                                 <i class="lni lni-user"></i>
-                                Hello
+                                {{ __('Hello')}}
                             </div>
                             <ul class="user-login">
                                 <li>
-                                    <a href="{{ route('login') }}">Sign In</a>
+                                    <a href="{{ route('login') }}">{{ Lang::get('Sign In') }}</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('register') }}">Register</a>
+                                    <a href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                             </ul>
                             @endauth
@@ -244,7 +242,7 @@
                                 id="navbarSupportedContent">
                                 <ul id="nav" class="navbar-nav ms-auto">
                                     <li class="nav-item">
-                                        <a href="index.html" aria-label="Toggle navigation">Home</a>
+                                        <a href="index.html" aria-label="Toggle navigation">{{ __('Home')}}</a>
                                     </li>
                                     <li class="nav-item">
                                         <a
@@ -254,10 +252,10 @@
                                             data-bs-target="#submenu-1-2"
                                             aria-controls="navbarSupportedContent"
                                             aria-expanded="false"
-                                            aria-label="Toggle navigation">Pages</a>
+                                            aria-label="Toggle navigation">{{ __('Pages')}}</a>
                                         <ul class="sub-menu collapse" id="submenu-1-2">
                                             <li class="nav-item">
-                                                <a href="about-us.html">About Us</a>
+                                                <a href="about-us.html">{{ __('About Us')}}</a>
                                             </li>
                                             <li class="nav-item"><a href="faq.html">Faq</a></li>
                                             <li class="nav-item active">
@@ -321,7 +319,7 @@
                                         </ul>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="contact.html" aria-label="Toggle navigation">Contact Us</a>
+                                        <a href="contact.html" aria-label="Toggle navigation">{{ trans('Contact Us')}}</a>
                                     </li>
                                 </ul>
                             </div>
